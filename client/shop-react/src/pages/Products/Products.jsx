@@ -1,4 +1,4 @@
-
+import './Products.scss';
 
 export function Products() {
    return (
