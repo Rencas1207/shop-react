@@ -3,12 +3,15 @@ import SearchIcon from "@mui/icons-material/Search";
 import PersonOutlineOutlinedIcon from "@mui/icons-material/PersonOutlineOutlined";
 import FavoriteBorderOutlinedIcon from "@mui/icons-material/FavoriteBorderOutlined";
 import ShoppingCartOutlinedIcon from "@mui/icons-material/ShoppingCartOutlined";
+import { useState } from "react";
 
 import { Link } from 'react-router-dom';
 
 import './Navbar.scss';
 
 export const Navbar = () => {
+   const [open, setOpen] = useState(false);
+
    return (
       <div className='navbar'>
          <div className="wrapper">
