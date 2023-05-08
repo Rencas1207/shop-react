@@ -8,6 +8,7 @@ import { useState } from "react";
 import { Link } from 'react-router-dom';
 
 import './Navbar.scss';
+import { Cart } from "../Cart/Cart";
 
 export const Navbar = () => {
    const [open, setOpen] = useState(false);
@@ -54,13 +55,16 @@ export const Navbar = () => {
                   <SearchIcon />
                   <PersonOutlineOutlinedIcon />
                   <FavoriteBorderOutlinedIcon />
-                  <div className="cartIcon">
+                  <div className="cartIcon" onClick={() => setOpen(!open)}>
                      <ShoppingCartOutlinedIcon />
                      <span>0</span>
                   </div>
                </div>
             </div>
          </div>
+         {
+            open && <Cart />
+         }
       </div>
    )
 }
