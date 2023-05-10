@@ -10,7 +10,6 @@ import { Product } from "./pages/Product/Product";
 import { Products } from "./pages/Products/Products";
 
 import './app.scss';
-import { useEffect } from "react";
 
 const Layout = () => {
   return (
