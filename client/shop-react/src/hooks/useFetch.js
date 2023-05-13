@@ -11,10 +11,8 @@ export function useFetch(url) {
       try {
         setLoading(true);
         const res = await makeRequest.get(url);
-        console.log(res.data.data);
         setData(res.data.data);
       } catch (error) {
-        console.log(error);
         setError(true);
       }
       setLoading(false);
