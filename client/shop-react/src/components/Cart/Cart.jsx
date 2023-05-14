@@ -4,6 +4,9 @@ import { removeItem, resetCart } from "../../redux/cartReducer";
 
 import './Cart.scss'
 
+import { loadStripe } from '@stripe/stripe-js';
+import { makeRequest } from "../../makeRequest";
+
 export function Cart() {
 
    const products = useSelector(state => state.cart.products);
@@ -14,6 +17,26 @@ export function Cart() {
       let total = 0;
       products.forEach(item => total += item.quantity * item.price)
       return total.toFixed(2);
+   }
+
+   // Make sure to call `loadStripe` outside of a component’s render to avoid
+   // recreating the `Stripe` object on every render.
+   const stripePromise = loadStripe('pk_test_51N7m4DHuS4xEMmgAzORalQzLzRWu52VhTZBM5wXx764LuoIJ9hHFWFrhffU6gqrKUZP7raunnSZf4UgExqRLhIr100kQu194b0');
+
+   const handlePayment = async () => {
+      try {
+         const stripe = await stripePromise;
+
+         const res = await makeRequest.post('/orders', {
+            products,
+         })
+
+         await stripe.redirectToCheckout({
+            sessionId: res.data.stripeSession.id
+         })
+      } catch (err) {
+         console.log(err);
+      }
    }
 
    return (
@@ -39,7 +62,7 @@ export function Cart() {
             <span>SUBTOTAL</span>
             <span>${totalPrice()}</span>
          </div>
-         <button>PROCEED TO CHECKOUT</button>
+         <button type="button" onClick={handlePayment}>PROCEED TO CHECKOUT</button>
          <span className="reset" onClick={() => dispatch(resetCart())}>Reset Cart</span>
       </div>
    )
